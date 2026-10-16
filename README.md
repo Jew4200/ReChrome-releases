@@ -39,12 +39,36 @@ extensions.
 
 ![ReChrome Shield: protection on, 325,983 active filter rules, 42,388 element-hiding rules, 20 of 20 lists enabled](docs/screenshots/shield.png)
 
-### Chrome's look, Chrome's settings layout
-Settings follows Chrome's own layout, wired to ReChrome's features:
-appearance, startup, search engine, privacy, performance, gestures,
-downloads, extensions.
+### Address bar that knows where you're going
+Start typing and ReChrome finishes the address from your history and
+bookmarks (`you` becomes `youtube.com`), lists matching pages and open tabs,
+and adds your search engine's suggestions. Arrow keys to pick, Enter to go.
 
-![The settings page, Appearance section](docs/screenshots/settings.png)
+![The address bar suggesting history pages and searches for "wiki"](docs/screenshots/omnibox.png)
+
+### Reader mode
+`Ctrl+Alt+R` strips a page down to the article: clean text in a comfortable
+column, with the pictures kept and everything else gone. Bigger or smaller
+text with one click.
+
+![A Wikipedia article in reader mode](docs/screenshots/reader.png)
+
+### Passwords, downloads and find, done properly
+
+| Saved passwords | Downloads you can pause | Find in page |
+|---|---|---|
+| ![The passwords page](docs/screenshots/passwords.png) | ![A paused download with Resume and Cancel](docs/screenshots/downloads.png) | ![Find in page showing 1/132 matches](docs/screenshots/find.png) |
+
+See, copy or remove the passwords ReChrome has saved; pause, resume or cancel
+a download; and find in page with a live "3 of 17" count, every match
+highlighted.
+
+### Chrome's look, Chrome's settings layout
+Settings follows Chrome's own layout, wired to ReChrome's features. From here
+you can also make ReChrome your default browser, so links from other apps
+open in it.
+
+![The settings page, Default browser section](docs/screenshots/settings.png)
 
 ### Extensions, including from the Chrome Web Store
 Paste a Chrome Web Store link to install an extension, import the ones you
@@ -126,8 +150,19 @@ removes it.
 - Pinned tabs, tab groups, tab search (`Ctrl+Shift+A`), mute a single tab
 - Session restore after a restart or a crash, plus named tab sets you can save
   and reopen
-- Picture-in-picture, find in page, per-site zoom, save page as PDF, print
+- Address-bar suggestions from your history, bookmarks and open tabs, with
+  inline completion and search suggestions (switch them off in Settings)
+- Picture-in-picture, find in page (match count, highlight all), per-site
+  zoom, save page as PDF, print
+- Screenshots of the visible area or the whole page (`Ctrl+Shift+X`)
+- Reader mode (`Ctrl+Alt+R`) and Translate page (Google Translate)
+- Reopen a closed window as well as closed tabs (`Ctrl+Shift+T`)
+- Profiles: separate work and personal browsing, each with its own
+  bookmarks, history, passwords and settings
+- Can be your default browser: links and `.html` files from other apps open
+  in ReChrome
 - Bookmarks bar with folders and real favicons; a bookmark manager
+- Downloads you can pause, resume and cancel
 - A task manager (`Shift+Esc`) and developer tools (`F12`)
 
 **Privacy and security**
@@ -135,7 +170,8 @@ removes it.
 - HTTPS-only mode (optional), secure DNS (optional), clear data on exit
   (optional), a warning before you type a password on an insecure page
 - Saved passwords use Chromium's own password manager, encrypted with Windows
-  DPAPI; never saved in private windows
+  DPAPI; a Passwords page lets you see, copy and remove them; never saved in
+  private windows
 - Popups show the real site in their title bar, so a fake sign-in popup can't
   pass itself off as Google
 - An optional VirusTotal check of a download's hash, with your own API key
@@ -170,6 +206,9 @@ removes it.
   browser with keys ReChrome cannot read.
 - **Windows only.** It is built on WebView2.
 - **In-video sponsor reads are not removed.** They are part of the video.
+- **No Google account sync.** WebView2 cannot sign in to Chrome sync, so
+  bookmarks and passwords do not sync with Chrome on other devices.
+- **English only.** The interface is not translated yet.
 - **The exe is not code-signed yet,** so Windows SmartScreen may warn the first
   time you run it. Check the SHA-256 below if you want to be sure the file is
   the published one.
@@ -218,6 +257,8 @@ these are the only calls the browser makes on its own:
 | `github.com` | Fetch `yt-dlp` and `ffmpeg` | The first time you use the Video Grabber |
 | `www.virustotal.com` | Look up a download's **hash** (never the file) | Only when you click *Check*, and only with your own API key |
 | `dns.google` | Secure DNS | Only if you turn Secure DNS on |
+| `suggestqueries.google.com` (or your engine's equivalent) | Search suggestions while you type in the address bar | As you type; switch off in Settings; never from a private window |
+| `translate.google.com` | Translate page | Only when you choose **Translate page** |
 
 The update check sends no token, no account and no machine identifier, only a
 generic `User-Agent`, the same for every copy.
@@ -229,7 +270,7 @@ generic `User-Agent`, the same for every copy.
 | Shortcut | Action |
 |---|---|
 | `Ctrl+T` / `Ctrl+W` | New tab / close tab |
-| `Ctrl+Shift+T` | Reopen the last closed tab |
+| `Ctrl+Shift+T` | Reopen the last closed tab (or window) |
 | `Ctrl+N` / `Ctrl+Shift+N` | New window / new private window |
 | `Ctrl+Shift+W` | Close the window |
 | `Ctrl+Tab` / `Ctrl+Shift+Tab` | Next / previous tab |
@@ -237,7 +278,7 @@ generic `User-Agent`, the same for every copy.
 | `Ctrl+Shift+A` | Search open and recently closed tabs |
 | `Ctrl+L` | Focus the address bar |
 | `Ctrl+R` / `F5` | Reload |
-| `Ctrl+F` | Find in page |
+| `Ctrl+F` | Find in page (Enter / Shift+Enter for next / previous) |
 | `Ctrl+D` | Bookmark this page |
 | `Ctrl+Shift+B` / `Ctrl+Shift+O` | Toggle bookmarks bar / bookmark manager |
 | `Ctrl+H` / `Ctrl+J` | History / downloads |
@@ -246,6 +287,8 @@ generic `User-Agent`, the same for every copy.
 | `Ctrl+P` / `Ctrl+Shift+S` | Print / save as PDF |
 | `Ctrl++` / `Ctrl+-` / `Ctrl+0` | Zoom in / out / reset |
 | `Ctrl+Shift+Delete` | Clear browsing data |
+| `Ctrl+Shift+X` | Screenshot of the visible area |
+| `Ctrl+Alt+R` | Reader mode |
 | `Shift+Esc` | Task manager |
 | `F12` | Developer tools |
 
