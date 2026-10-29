@@ -25,6 +25,7 @@ behind when you delete the folder.
 | **Ad blocking** | Built in, no extension: 20 filter lists (uBlock Origin's, EasyList, EasyPrivacy and more), ~326,000 network rules and ~42,000 element-hiding rules, plus dedicated YouTube and Twitch layers |
 | **Install** | None. A single portable `ReChrome.exe` |
 | **Platform** | Windows 11 (Windows 10 with the WebView2 runtime) |
+| **Extensions** | Chrome Web Store extensions install with **Add to Chrome**, and AI assistants (Claude, ChatGPT, Cursor) can drive the browser as they do in Chrome. See [AI assistants](#ai-assistants-in-the-browser) |
 | **Telemetry** | None. Every outbound call it makes on its own is listed [below](#what-it-talks-to) |
 | **Updates** | Only when you ask. Downloads are checked against a published SHA-256 |
 
@@ -70,13 +71,37 @@ open in it.
 
 ![The settings page, Default browser section](docs/screenshots/settings.png)
 
-### Extensions, including from the Chrome Web Store
-Paste a Chrome Web Store link to install an extension, import the ones you
-already have in Chrome, or load one from a folder or `.crx`/`.zip`. The
-built-in tools (Video Grabber, AutoScroll, Shield) are listed here too, each
-with its own on/off switch.
+### Extensions, straight from the Chrome Web Store
+Open any extension on the Chrome Web Store and click **Add to Chrome**: ReChrome
+asks first, as Chrome does, listing what the extension will be able to do, then
+installs it. **Remove from Chrome** works from the store page too, and an
+extension you remove stays removed. You can also paste a store link, import the
+extensions you already have in Chrome, or load one from a folder or
+`.crx`/`.zip`.
 
-![The extensions page, with the Web Store box and the built-in apps](docs/screenshots/extensions.png)
+![The Chrome Web Store in ReChrome, with an extension added in one click](docs/screenshots/store.png)
+
+Each extension's Details page shows whether every Chrome feature it uses is
+available here, checked automatically when the extension starts. The built-in
+tools (Video Grabber, AutoScroll, Shield) are listed on the Extensions page too,
+each with its own on/off switch.
+
+![An extension's Details page: description, permissions, and the Chrome API check](docs/screenshots/extension-details.png)
+
+### AI assistants in the browser
+The Claude and ChatGPT extensions, and Cursor through Browser MCP, work the way
+they do in Chrome. They can open, switch, move, pin and group tabs, read and
+click pages, take screenshots, and open ReChrome's own pages
+(`chrome://settings` opens ReChrome's Settings). What they do happens on
+ReChrome's tab strip in front of you. Their side panels open beside the page,
+keyboard shortcuts work, and dictation in a side panel asks for the microphone
+first.
+
+An assistant sees your bookmarks, history and most-visited sites only if its
+extension asked for that permission, as in Chrome, and only it can change them.
+A desktop app such as Claude Code can drive ReChrome through the Claude
+extension: open pages, read console errors and network requests, and take
+screenshots.
 
 ### Private windows that really leave nothing behind
 `Ctrl+Shift+N` opens a private window, marked with a purple accent line.
@@ -143,8 +168,10 @@ removes it.
 ## Features
 
 **Browsing**
-- Full Chromium engine: H.264, HEVC, AV1, VP9, WebM, AVIF and Widevine DRM, so
-  Netflix- and Spotify-class sites work
+- Full Chromium engine: H.264, AV1, VP9, WebM, AVIF and Widevine DRM, so
+  Netflix- and Spotify-class sites work. HEVC is not offered, because the
+  engine cannot decode it; sites then pick a format that plays (this is what
+  fixes Twitch's Error #4000)
 - Frameless Chrome-style window: drag by the tab strip, double-click to
   maximise, drag a tab out to make a new window
 - Pinned tabs, tab groups, tab search (`Ctrl+Shift+A`), mute a single tab
@@ -178,6 +205,14 @@ removes it.
   (stored encrypted)
 - No telemetry, no crash reporting, no identifiers
 
+**Extensions and AI assistants**
+- **Add to Chrome** and **Remove from Chrome** work on the Chrome Web Store
+- Extension side panels, toolbar pins with badges, keyboard shortcuts
+- Assistant extensions control real tabs, windows, groups and pins, and see
+  your bookmarks, history and top sites only with the extension's permission
+- Every extension is checked for Chrome features it needs that are missing; the
+  result is on its Details page
+
 **Bringing your stuff across**
 - Imports bookmarks and history from Chrome, Edge, Brave, Vivaldi and Opera,
   including the Google-account bookmarks modern Chrome keeps in a separate file
@@ -197,11 +232,17 @@ removes it.
 
 ## Honest limitations
 
-- **No Web Store browsing inside the app.** Installing from the Chrome Web
-  Store works by pasting the extension's store link or ID. A few extensions'
-  toolbar popups can't be shown in WebView2 (some Manifest V3 blockers, for
-  example); the extension still runs and its settings stay reachable from the
-  Extensions page.
+- **A few extensions' toolbar popups can't be shown** in WebView2 (some
+  Manifest V3 blockers, for example); the extension still runs and its
+  settings stay reachable from the Extensions page.
+- **Extensions can't read ReChrome's own pages as text** (Settings, Passwords
+  and the rest), the same rule Chrome applies to its own pages. An assistant
+  can still see them and click on them.
+- **A file an extension downloads** is saved to your Downloads folder but is
+  not listed on ReChrome's Downloads page yet.
+- **AI assistants need their own apps for some things:** ChatGPT's Work mode
+  runs through OpenAI's desktop app, Cursor needs Browser MCP's one-time
+  **Allow**, and each assistant keeps its own "ask before acting" settings.
 - **Passwords and cookies do not import.** They are encrypted to the source
   browser with keys ReChrome cannot read.
 - **Windows only.** It is built on WebView2.
@@ -259,6 +300,9 @@ these are the only calls the browser makes on its own:
 | `dns.google` | Secure DNS | Only if you turn Secure DNS on |
 | `suggestqueries.google.com` (or your engine's equivalent) | Search suggestions while you type in the address bar | As you type; switch off in Settings; never from a private window |
 | `translate.google.com` | Translate page | Only when you choose **Translate page** |
+| `api.pwnedpasswords.com` | Password Checkup: whether a saved password appears in a known breach. Only the first 5 characters of the password's SHA-1 hash are sent, never the password | Only when you run Password Checkup |
+| `aus1.torproject.org`, `dist.torproject.org`, `check.torproject.org` | Download and verify Tor, and the Tor window's start page | Only when you open a Tor window |
+| `chromewebstore.google.com`, `clients2.google.com` | The store page itself, and the extension package | Only when you click **Add to Chrome** or check for extension updates |
 
 The update check sends no token, no account and no machine identifier, only a
 generic `User-Agent`, the same for every copy.
