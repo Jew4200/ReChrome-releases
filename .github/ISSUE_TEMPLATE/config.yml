@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Questions, comments and general feedback
+    url: https://github.com/Jew4200/ReChrome-releases/discussions
+    about: Not a bug? Just want to say something? Post it in Discussions.
