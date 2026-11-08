@@ -1,0 +1,48 @@
+name: Bug report
+description: Something in ReChrome is broken or behaves wrongly
+title: "[Bug] "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for reporting. The more exact you are, the faster it gets fixed.
+  - type: input
+    id: version
+    attributes:
+      label: ReChrome version
+      description: Shown in the app's About / Settings page, or right-click ReChrome.exe > Properties > Details.
+      placeholder: "1.2.3"
+    validations:
+      required: true
+  - type: input
+    id: windows
+    attributes:
+      label: Windows version
+      placeholder: "Windows 11 24H2"
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: Include the website or video you were on if it matters.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect instead?
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open ...
+        2. Click ...
+        3. See ...
+  - type: textarea
+    id: logs
+    attributes:
+      label: Log or screenshot
+      description: Paste the relevant lines from the log file next to ReChrome.exe (drag a screenshot in if you have one). Remove anything private first.
+      render: text
