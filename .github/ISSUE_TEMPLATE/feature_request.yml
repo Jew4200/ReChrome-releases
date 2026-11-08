@@ -1,0 +1,19 @@
+name: Feature request
+description: Suggest something ReChrome should do
+title: "[Idea] "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like ReChrome to do?
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why? What problem does it solve for you?
+  - type: textarea
+    id: alt
+    attributes:
+      label: Anything else (other apps that do this, mock-ups, links)
